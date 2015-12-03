@@ -15,9 +15,7 @@ arrowToMovement a
     | a == 'v' = ( 0, -1)
 
 listHouses :: String -> [House]
-listHouses = foldl' updateHouses [(0, 0)] . map arrowToMovement
-  where
-    updateHouses ps@(p:_) m = (move p m):ps
+listHouses = scanl' move (0, 0) . map arrowToMovement
 
 noOfUniqueHouses :: String -> Int
 noOfUniqueHouses = length . nub . listHouses
