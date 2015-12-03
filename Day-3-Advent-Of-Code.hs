@@ -15,9 +15,20 @@ arrowToMovement a
     | a == 'v' = ( 0, -1)
 
 listHouses :: String -> [House]
-listHouses = foldr updateHouses [(0, 0)] . map arrowToMovement
+listHouses = foldl' updateHouses [(0, 0)] . map arrowToMovement
   where
-    updateHouses m ps@(p:_) = (move p m):ps
+    updateHouses ps@(p:_) m = (move p m):ps
 
 noOfUniqueHouses :: String -> Int
 noOfUniqueHouses = length . nub . listHouses
+
+-- Part 2
+everyOther :: [a] -> [a]
+everyOther []     = []
+everyOther (x:xs) = x:(everyOther $ drop 1 xs)
+
+noOfUniqueHouses' :: String -> Int
+noOfUniqueHouses' instructions = length . nub $ (santaHouses ++ roboHouses)
+  where
+    santaHouses = listHouses . everyOther $ instructions
+    roboHouses  = listHouses . everyOther . tail $ instructions
