@@ -2,21 +2,14 @@
 import Data.List
 
 hasThreeVowels :: String -> Bool
-hasThreeVowels = (> 2) . length . filter isVowel
-  where
-    isVowel c = elem c "aeiou"
+hasThreeVowels = (> 2) . length . filter (flip elem "aeiou")
 
 hasOffsetTwin :: Int -> Int -> String -> Bool
-hasOffsetTwin subLength offset s =
-    isInfixOf test . map isDiagonal $ zip (drop offset s) s
-  where
-    test              = take subLength $ repeat True
-    isDiagonal (x, y) = x == y
+hasOffsetTwin subLength offset s = isInfixOf (take subLength $ repeat True)
+    $ zipWith (==) (drop offset s) s
 
 hasNoBadPairs :: String -> Bool
-hasNoBadPairs s = (== []) . filter (flip isInfixOf s) $ badPairs
-  where
-    badPairs = ["ab", "cd", "pq", "xy"]
+hasNoBadPairs s = not . any (flip isInfixOf s) $ ["ab", "cd", "pq", "xy"]
 
 isNiceString :: [String -> Bool] -> String -> Bool
 isNiceString checks s = and . map (\check -> check s) $ checks
@@ -30,9 +23,8 @@ howManyNiceStringsOne = howManyNiceStringsGeneral
 
 -- Part 2
 hasNonoverlappingTwinPair :: String -> Bool
-hasNonoverlappingTwinPair s = (/= []) . filter p $ [2..(length s - 2)]
-  where
-    p offset = hasOffsetTwin 2 offset s
+hasNonoverlappingTwinPair s =
+    any (\offset -> hasOffsetTwin 2 offset s) [2..(length s - 2)]
 
 howManyNiceStringsTwo :: [String] -> Int
 howManyNiceStringsTwo = howManyNiceStringsGeneral
