@@ -9,9 +9,6 @@ type Signal = Word16
 type Wire = String
 type Instructions = Map.Map Wire (Wire, String, Wire)
 
-isInteger :: String -> Bool
-isInteger = and . map isDigit
-
 calculate :: Instructions -> Wire -> Signal
 calculate booklet = calcMemo
   where
@@ -25,4 +22,8 @@ calculate booklet = calcMemo
         | op == "LSHIFT" = shiftL (calcMemo l) (read r)
         | op == "RSHIFT" = shiftR (calcMemo l) (read r)
       where
+        isInteger  = and . map isDigit
         (l, op, r) = booklet Map.! wire
+
+-- Part 2
+-- Just use the same function before with the output of part a in place of the input of part b.
