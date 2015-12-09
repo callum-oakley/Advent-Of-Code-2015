@@ -1,8 +1,6 @@
 -- Part 1
 import Data.List
 
--- first process the input to be of the form [.."string"..]
-
 hasThreeVowels :: String -> Bool
 hasThreeVowels = (> 2) . length . filter (flip elem "aeiou")
 

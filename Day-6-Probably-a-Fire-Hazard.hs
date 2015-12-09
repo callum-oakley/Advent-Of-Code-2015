@@ -2,8 +2,6 @@
 import Data.Array
 import Data.List
 
--- first process the input to be of the form [..(operation,(x,y),(x',y'))..]
-
 type Light       = Int
 type LightGrid   = Array (Int, Int) Light
 type Instruction = (Light -> Light, (Int, Int), (Int, Int))
