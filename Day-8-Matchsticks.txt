@@ -6,4 +6,4 @@ The untouched input has 6789 characters of code. (this includes newlines but tha
 Part 2
 Another text editor solution using the same tools as above.
 
-Again we start with 6789 characters of code. Replace each " and \ with aa (as each takes 2 characters to encode.) Finally add quotes to the beginning and end of every line. This leaves us with 8906 characters, for a difference of 2117
+Again we start with 6789 characters of code. Replace each " and \ with aa (as each takes 2 characters to encode.) Finally add quotes to the beginning and end of every line. This leaves us with 8906 characters, for a difference of 2117.
