@@ -13,18 +13,17 @@ rotate :: [a] -> [a]
 rotate [] = []
 rotate (x:xs) = xs ++ [x]
 
-extremalRoute :: (Distance -> Distance -> Ordering) -> ([City] -> City) ->
-    DistanceArray -> Distance
-extremalRoute comparison reduction distances =
-    reduction . map totalDistance . cycles $ [0..n]
+extremalRoute :: (Distance -> Distance -> Ordering) -> DistanceArray -> Distance
+extremalRoute comparison distances =
+    maximumBy comparison . map totalDistance . cycles $ [0..n]
   where
     n = fst . snd . bounds $ distances
     totalDistance cities = sum . tail . sortBy comparison $
         zipWith (\x y -> distances ! (x, y)) cities (rotate cities)
 
 shortestRoute :: DistanceArray -> Distance
-shortestRoute = extremalRoute (flip compare) minimum
+shortestRoute = extremalRoute (flip compare)
 
 -- Part 2
 longestRoute :: DistanceArray -> Distance
-longestRoute = extremalRoute compare maximum
+longestRoute = extremalRoute compare
