@@ -5,7 +5,7 @@ hasThreeVowels :: String -> Bool
 hasThreeVowels = (> 2) . length . filter (flip elem "aeiou")
 
 hasOffsetTwin :: Int -> Int -> String -> Bool
-hasOffsetTwin subLength offset s = isInfixOf (take subLength $ repeat True)
+hasOffsetTwin subLength offset s = isInfixOf (replicate subLength True)
     $ zipWith (==) (drop offset s) s
 
 hasNoBadPairs :: String -> Bool
