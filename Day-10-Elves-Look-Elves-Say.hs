@@ -1,15 +1,13 @@
 -- Part 1
 import Data.List
 
-lookAndSay :: String -> [String]
-lookAndSay = iterate (concatMap say . group)
-  where
-    say xs = (show . length $ xs) ++ [head xs]
+lookAndSay :: String -> String
+lookAndSay = concatMap (\x -> (show . length $ x) ++ [head x]) . group
 
-lengthOfResult :: String -> Int -> Int
-lengthOfResult seed n = length . head . reverse . take n . lookAndSay $ seed
+lengthOfResult :: Int -> String -> Int
+lengthOfResult n = length . (!! n) . iterate lookAndSay
 
--- lengthOfResult "1321131112" 41
+-- lengthOfResult 40 "1321131112"
 
 -- Part 2
--- lengthOfResult "1321131112" 51
+-- lengthOfResult 50 "1321131112"
