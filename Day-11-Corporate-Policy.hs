@@ -23,5 +23,8 @@ hasPairs = (>= 2) . length . filter ((>= 2) . length) . group
 isValid :: String -> Bool
 isValid s = hasPairs s && hasStraight s
 
-findNextValid :: String -> String -- assumes no 'i' 'o' or 'l'
-findNextValid = head . filter isValid . iterate increment
+findNextValid :: String -> String -- assumes no 'i' 'o' or 'l' in input
+findNextValid = head . filter isValid . tail . iterate increment
+
+-- Part 2
+-- Just feed the output from part 1 back in to findNextValid once more.
