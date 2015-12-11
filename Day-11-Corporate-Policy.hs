@@ -12,10 +12,8 @@ increment :: String -> String
 increment = snd . foldr inc (True, [])
 
 hasStraight :: String -> Bool
-hasStraight (_:_:[]) = False
-hasStraight (a:b:c:ds)
-    | succ a == b && succ b == c = True
-    | otherwise                  = hasStraight (b:c:ds)
+hasStraight = any ((>= 3) . length) . group . zipWith ($)
+    (scanl' (.) id (repeat pred))
 
 hasPairs :: String -> Bool
 hasPairs = (>= 2) . length . filter ((>= 2) . length) . group
