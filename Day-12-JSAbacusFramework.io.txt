@@ -1,0 +1,2 @@
+-- Part 1
+Another editor solution: use regex find and select to copy all the numbers (using -?\d+ ) and then paste them on their own, put them in a list and sum said list.
