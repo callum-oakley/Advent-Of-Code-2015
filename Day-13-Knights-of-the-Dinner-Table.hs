@@ -20,3 +20,6 @@ maxHappiness happinessArray = maximum . map happiness . cycles $ [0..n]
     n                 = fst . snd . bounds $ happinessArray
     pairHappiness p q = happinessArray ! (p, q) + happinessArray ! (q, p)
     happiness seating = sum $ zipWith pairHappiness seating (rotate seating)
+
+-- Part 2
+-- Just use our new input with the same maxHppiness function.
