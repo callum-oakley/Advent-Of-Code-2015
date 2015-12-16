@@ -2,7 +2,7 @@
 import Data.Array
 import Data.List
 
-type Speed    = Integer
+type Speed    = Integer   
 type Time     = Integer
 type Distance = Integer
 type Reindeer = Integer
