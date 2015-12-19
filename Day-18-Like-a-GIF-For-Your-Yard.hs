@@ -3,13 +3,11 @@ import Data.Array
 import Data.List
 
 data Light = On | Off deriving (Eq, Show, Read)
-type LightGrid = Array (Int, Int) Light
+type LightIndex = (Int, Int)
+type LightGrid = Array LightIndex Light
 
-update :: Ix i => (e -> e) -> Array i e -> [i] -> Array i e
-update f a indices = accum (flip ($)) a (zip indices (repeat f))
-
-simulateStep :: LightGrid -> LightGrid
-simulateStep grid = array ((0,0),(101,101))
+simulateStep :: [LightIndex] -> LightGrid -> LightGrid
+simulateStep fixedOn grid = array ((0,0),(101,101))
     [((i,j), light i j) | i <- [0..101], j <- [0..101]]
   where
     neighborsOn i j = length . filter (== On) .
@@ -17,11 +15,17 @@ simulateStep grid = array ((0,0),(101,101))
         [(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]
     light i j
         | intersect [i, j] [0, 101] /= [] = Off
+        | elem (i, j) fixedOn             = On
         | grid ! (i,j) == On = if neighborsOn i j `elem` [2, 3] then On else Off
         | otherwise          = if neighborsOn i j == 3          then On else Off
 
-simulateSteps :: Int -> LightGrid -> LightGrid
-simulateSteps n = foldr (.) id (replicate n simulateStep)
+simulateSteps :: Int -> [LightIndex] -> LightGrid -> LightGrid
+simulateSteps n fixedOn = foldr (.) id (replicate n (simulateStep fixedOn))
 
 lightsOn :: Int -> LightGrid -> Int
-lightsOn n = length . filter (== On) . elems . simulateSteps n
+lightsOn n = length . filter (== On) . elems . simulateSteps n []
+
+-- Part 2
+lightsOn' :: Int -> LightGrid -> Int
+lightsOn' n = length . filter (== On) . elems .
+    simulateSteps n [(1,1),(1,100),(100,1),(100,100)]
