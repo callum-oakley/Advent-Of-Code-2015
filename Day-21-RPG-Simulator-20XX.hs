@@ -6,9 +6,9 @@ data Character = Player | Boss deriving (Read, Show, Eq)
 type Cost      = Integer
 
 data Item = Item {
-cost       :: Integer,
-itemDamage :: Integer,
-itemArmor :: Integer
+    cost       :: Integer,
+    itemDamage :: Integer,
+    itemArmor :: Integer
 } deriving (Read, Show)
 
 data Stats = Stats {
@@ -52,4 +52,10 @@ fight attacker (Stats {character = c, hitPoints = h, damage = d, armor = a})
 cheapestWin :: [Item] -> [Item] -> [Item] -> Stats -> Cost
 cheapestWin weapons armor rings boss =
     fst . head . filter (\(_, player) -> fight player boss == Player) $
+    generateStats weapons armor rings
+
+-- Part 2
+mostExpensiveLoss :: [Item] -> [Item] -> [Item] -> Stats -> Cost
+mostExpensiveLoss weapons armor rings boss =
+    fst . head . filter (\(_, player) -> fight player boss == Boss) . reverse $
     generateStats weapons armor rings
