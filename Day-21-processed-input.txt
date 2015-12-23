@@ -1,0 +1,11 @@
+Boss:
+(Stats {character = Boss, hitPoints = 103, damage = 9, armor = 2})
+
+Weapons:
+[Item {cost = 8, itemDamage = 4, itemArmor = 0}, Item {cost = 10, itemDamage = 5, itemArmor = 0}, Item {cost = 25, itemDamage = 6, itemArmor = 0}, Item {cost = 40, itemDamage = 7, itemArmor = 0}, Item {cost = 74, itemDamage = 8, itemArmor = 0}]
+
+Armor:
+[Item {cost = 0, itemDamage = 0, itemArmor = 0}, Item {cost = 13, itemDamage = 0, itemArmor = 1}, Item {cost = 31, itemDamage = 0, itemArmor = 2}, Item {cost = 53, itemDamage = 0, itemArmor = 3}, Item {cost = 75, itemDamage = 0, itemArmor = 4}, Item {cost = 102, itemDamage = 0, itemArmor = 5}]
+
+Rings:
+[Item {cost = 25, itemDamage = 1, itemArmor = 0}, Item {cost = 50, itemDamage = 2, itemArmor = 0}, Item {cost = 100, itemDamage = 3, itemArmor = 0}, Item {cost = 20, itemDamage = 0, itemArmor = 1}, Item {cost = 40, itemDamage = 0, itemArmor = 2}, Item {cost = 80, itemDamage = 0, itemArmor = 3}]

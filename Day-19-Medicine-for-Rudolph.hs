@@ -26,5 +26,5 @@ calibration molecule = length . nub . concatMap (applyReplacement molecule)
 -- a to b(c,d,f)
 -- where a b c d f are elements other than e ( , )
 
--- Not that "number of non bracket, non comma atoms minus number of commas minus number of moves == 1" (easy proof by induction)
--- so if we make each molecule one character long, delete parentheses and delete commas AND an adjacent molecules, and finally delete one more character for the electron step, then the final length of the string should be the number of steps.
+-- Note that "number of non bracket, non comma atoms minus number of commas minus number of moves == 1" (easy proof by induction).
+-- So if we make each molecule one character long, delete parentheses and delete commas AND an adjacent atom, and finally delete one more atom for the electron step, then the final length of the string should be the number of steps.
