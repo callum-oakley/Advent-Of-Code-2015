@@ -32,16 +32,11 @@ generateStats weapons armor rings = sortBy (on compare fst)
         })
 
 fight :: Stats -> Stats -> Character
-fight attacker (Stats {character = c, hitPoints = h, damage = d, armor = a})
-    | hitPoints defender <= 0 = character attacker
-    | otherwise               = fight defender attacker
+fight attacker defender@(Stats {hitPoints = h, armor = a})
+    | hitPoints defender' <= 0 = character attacker
+    | otherwise                = fight defender' attacker
   where
-    defender = Stats {
-        character = c,
-        hitPoints = h - max 1 (damage attacker - a),
-        damage    = d,
-        armor     = a
-    }
+    defender' = defender {hitPoints = h - max 1 (damage attacker - a)}
 
 cheapestWin :: [Item] -> [Item] -> [Item] -> Stats -> Cost
 cheapestWin weapons armor rings boss =
