@@ -33,8 +33,13 @@ data BossStats = BossStats {
 }
 
 data Signal = PlayerToAttack | BossToAttack | End deriving (Eq)
-
 type State = (PlayerStats, BossStats, [Effect], Signal, StdGen)
+data Difficulty = Easy | Hard
+
+difficultyModifier :: Difficulty -> State -> State
+difficultyModifier Hard (p, b, es, PlayerToAttack, r) =
+    (p {playerHP = playerHP p - 1}, b, es, PlayerToAttack, r)
+difficultyModifier _ state = state
 
 testForWin :: State -> State
 testForWin (p, b, es, s, r)
@@ -78,11 +83,11 @@ attack (p, b, es, BossToAttack, r) = (p', b, es, PlayerToAttack, r)
 resetMagicArmor :: State -> State
 resetMagicArmor (p, b, es, s, r) = (p {magicArmor = 0}, b, es, s, r)
 
-fight :: State -> State
-fight (p, b, es, End, r) = (p, b, es, End, r)
-fight state =
-    fight . resetMagicArmor . testForWin . attack . testForWin . applyEffects $
-    state
+fight :: Difficulty -> State -> State
+fight difficulty (p, b, es, End, r) = (p, b, es, End, r)
+fight difficulty state =
+    (fight difficulty) . resetMagicArmor . testForWin . attack . testForWin .
+    applyEffects . testForWin . difficultyModifier difficulty $ state
 
 playerWin :: State -> Bool
 playerWin (_, b, _, _, _) = bossHP b <= 0
@@ -90,6 +95,10 @@ playerWin (_, b, _, _, _) = bossHP b <= 0
 finalManaSpent :: State -> Integer
 finalManaSpent (p, _, _, _, _) = manaSpent p
 
-leastManaToWin :: (StdGen -> State) -> Int -> Integer
-leastManaToWin stateGenerator n = minimum . map finalManaSpent .
-    filter playerWin . map (fight . stateGenerator . mkStdGen) $ [0..n]
+leastManaToWin :: Difficulty -> (StdGen -> State) -> Int -> Integer
+leastManaToWin difficulty stateGenerator n = minimum . map finalManaSpent .
+    filter playerWin . map ((fight difficulty) . stateGenerator . mkStdGen) $
+    [0..n]
+
+-- Part 2
+-- Just set difficulty to Hard.
