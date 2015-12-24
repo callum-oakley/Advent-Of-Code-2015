@@ -30,3 +30,6 @@ run instructions (a, b, i)
     | otherwise = run instructions $ execute (instructions ! i) (a, b, i)
   where
     (bottom, top) = bounds instructions
+
+-- Part 2
+-- Just change the input.
