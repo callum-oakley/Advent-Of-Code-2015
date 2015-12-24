@@ -18,17 +18,11 @@ data Stats = Stats {
     armor     :: Integer
 } deriving (Read, Show)
 
-subsetsOfSizeAtMost :: Int -> [a] -> [[a]]
-subsetsOfSizeAtMost 0 _      = [[]]
-subsetsOfSizeAtMost _ []     = [[]]
-subsetsOfSizeAtMost n (x:xs) =
-    map (x:) (subsetsOfSizeAtMost (n-1) xs) ++ subsetsOfSizeAtMost n xs
-
 generateStats :: [Item] -> [Item] -> [Item] -> [(Cost, Stats)]
 generateStats weapons armor rings = sortBy (on compare fst)
     [costAndStats w a rs | w <- weapons, a <- armor, rs <- ringCombinations]
   where
-    ringCombinations = subsetsOfSizeAtMost 2 rings
+    ringCombinations = filter ((<=2) . length) . subsequences $ rings
     costAndStats w a rs = (sum . map cost $ w:a:rs,
         Stats {
             character = Player,
