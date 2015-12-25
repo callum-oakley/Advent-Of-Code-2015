@@ -21,7 +21,8 @@ balancedPartition' _ _ [] = [([], [], [], [])]
 balancedPartition' targetSize targetWeight (x:xs) =
     concatMap (\(a, b, c, d) ->
         [(x:a, b, c, d), (a, x:b, c, d), (a, b, x:c, d), (a, b, c, x:d)]) .
-    filter (\(a, b, c, d) -> and [length a <= targetSize, sum a <= targetWeight, sum b <= targetWeight, sum c <= targetWeight, sum d <= targetWeight]) $
+    filter (\(a, b, c, d) -> and [length a <= targetSize, sum a <= targetWeight,
+    sum b <= targetWeight, sum c <= targetWeight, sum d <= targetWeight]) $
     balancedPartition' targetSize targetWeight xs
 
 minQE' :: (Num a, Ord a) => Int -> a -> [a] -> a
