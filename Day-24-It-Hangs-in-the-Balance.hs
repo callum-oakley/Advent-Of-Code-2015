@@ -1,3 +1,5 @@
+-- can make the below much nicer by first finding small subsets with the correct sum, and then seeing if the rest can be split...
+
 -- Part 1
 balancedPartition :: (Num a, Ord a) => Int -> a -> [a] -> [([a], [a], [a])]
 balancedPartition _ _ [] = [([], [], [])]
