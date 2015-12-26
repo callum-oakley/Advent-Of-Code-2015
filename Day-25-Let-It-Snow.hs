@@ -1,11 +1,10 @@
--- Part 1
-triangle :: Int -> Int
+import Math.NumberTheory.Powers
+
+triangle :: Integer -> Integer
 triangle n = div (n * (n + 1)) 2
 
-code :: Int -> Int
-code n = foldr (.) id (replicate (n - 1) nextCode) $ 20151125
-  where
-    nextCode = (flip rem 33554393) . (* 252533)
+code :: Integer -> Integer
+code n = (flip mod 33554393) . (* 20151125) $ powerMod 252533 (n - 1) 33554393
 
-codeAt :: (Int, Int) -> Int
+codeAt :: (Integer, Integer) -> Integer
 codeAt (x, y) = code $ triangle (x + y - 2) + y
